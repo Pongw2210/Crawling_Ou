@@ -7,11 +7,10 @@ import os
 # Thêm Poppler vào PATH
 os.environ["PATH"] += os.pathsep + r"C:\Release-24.08.0-0\poppler-24.08.0\Library\bin"
 
-
 def is_pdf(url_pdf):
     return url_pdf.lower().endswith('.pdf')
 
-def ocr_pdf_from_url(pdf_url, lang="vie", max_chars=2000, max_pages=5):
+def ocr_pdf_from_url(pdf_url, lang="vie", max_chars=20000, max_pages=5):
     try:
         response = requests.get(pdf_url, stream=True, timeout=15)
         response.raise_for_status()

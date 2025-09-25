@@ -2,7 +2,6 @@ import pickle
 import time
 from urllib.parse import urlparse
 
-
 def run(start_url, limit=None, max_duration=None):
     start_time = time.time()
     start_netloc = urlparse(start_url).netloc

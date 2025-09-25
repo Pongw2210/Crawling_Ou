@@ -1,9 +1,17 @@
+import os
+import platform
+
 import requests
 from PIL import Image
 from io import BytesIO
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+if platform.system() == "Windows":
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+elif os.path.exists("/usr/bin/tesseract"):
+    pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
 def is_image(url_image):
     return any(url_image.lower().endswith(ext) for ext in ['.jpg', '.jpeg', '.png', '.bmp'])

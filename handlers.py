@@ -1,7 +1,5 @@
-from bs4 import BeautifulSoup
 from readability import Document
-from selenium.webdriver.common.devtools.v136.network import delete_cookies
-from six import reraise
+from bs4 import BeautifulSoup
 
 def handler_model_ou_main(html):
     soup = BeautifulSoup(html, "html.parser")
@@ -34,9 +32,6 @@ def handler_model_elementor_event(html):
     content = '\n'.join(p.get_text(strip=True) for p in paragraphs if p.get_text(strip=True))
 
     return title,content,"Elementor"
-
-
-from bs4 import BeautifulSoup
 
 def handler_model_it_ou(html):
     soup = BeautifulSoup(html, "html.parser")
