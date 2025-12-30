@@ -1,17 +1,27 @@
 import sqlite3
 import pandas as pd
 
-# Kết nối tới DB
-conn = sqlite3.connect("ou_output.db")
+# ==== CẤU HÌNH HIỂN THỊ (QUAN TRỌNG) ====
+pd.set_option("display.max_columns", None)      # hiện tất cả cột
+pd.set_option("display.width", None)            # không giới hạn chiều ngang
+pd.set_option("display.max_colwidth", 300)      # không cắt text dài
 
-# Đọc toàn bộ bảng 'pages' vào DataFrame
-df = pd.read_sql_query("SELECT * FROM pages", conn)
+# ==== KẾT NỐI DB ====
+conn = sqlite3.connect("crawled_data.db")
 
+# ==== ĐỌC BẢNG pages ====
+df_pages = pd.read_sql_query(
+    "SELECT * FROM pages",
+    conn
+)
+
+# ==== XEM THÔNG TIN ====
+print("=== INFO ===")
+df_pages.info()
+
+print("\n=== 5 RECORD ĐẦU ===")
+print(df_pages.head())
+
+# ==== ĐÓNG KẾT NỐI ====
 conn.close()
 
-# Xem thông tin
-print(df.info())
-print(df.head())
-print("CONTENT",df['content'][0])
-print("HREF",df['href'][0])
-print("TITLE",df['title'][0])

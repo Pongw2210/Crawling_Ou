@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 
 from ocr_pdf import is_pdf, ocr_pdf_from_url
-from ocr_image import is_image,ocr_image_from_url
+# from ocr_image import is_image,ocr_image_from_url
 from urllib.parse import urljoin
 from handlers import handler_model_ou_main, handler_model_elementor_event,handler_model_it_ou,handle_model_readability,handle_fallback
 
@@ -23,25 +23,25 @@ def extract_pdf_content(soup, base_url,original_content):
 
     return content
 
-def extract_img_content(soup, base_url, original_content):
-    img_links = set()
-    content = ""
-
-    content_blocks = soup.select("div.content, div.article, .post-content, .fp-leftpad.content-inner")
-    for block in content_blocks:
-        for img_tag in block.find_all("img", src=True):
-            img_src = img_tag.get('src')
-            if is_image(img_src):
-                full_img_url = urljoin(base_url, img_src)
-                img_links.add(full_img_url)
-
-    for img_url in img_links:
-        # print(f"OCR IMAGE: {img_url}")
-        img_text = ocr_image_from_url(img_url)
-        if img_text and img_text not in original_content:
-            content += f"\n\n--- Nội dung từ ảnh ({img_url}) ---\n{img_text}"
-
-    return content
+# def extract_img_content(soup, base_url, original_content):
+#     img_links = set()
+#     content = ""
+#
+#     content_blocks = soup.select("div.content, div.article, .post-content, .fp-leftpad.content-inner")
+#     for block in content_blocks:
+#         for img_tag in block.find_all("img", src=True):
+#             img_src = img_tag.get('src')
+#             if is_image(img_src):
+#                 full_img_url = urljoin(base_url, img_src)
+#                 img_links.add(full_img_url)
+#
+#     for img_url in img_links:
+#         # print(f"OCR IMAGE: {img_url}")
+#         img_text = ocr_image_from_url(img_url)
+#         if img_text and img_text not in original_content:
+#             content += f"\n\n--- Nội dung từ ảnh ({img_url}) ---\n{img_text}"
+#
+#     return content
 
 def extract_flexible_content(html, base_url):
     handlers = [
@@ -60,7 +60,7 @@ def extract_flexible_content(html, base_url):
             soup = BeautifulSoup(html, "html.parser")
 
             content += extract_pdf_content(soup,base_url,content)
-            content += extract_img_content(soup,base_url,content)
+            # content += extract_img_content(soup,base_url,content)
 
             return title, content, model
 
